@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Accounts</title>
+
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow: hidden;
+        }
+
+        .page-border {
+            width: 980px;
+            max-width: 95%;
+            height: 85vh;
+            padding: 40px;
+            border-radius: 28px;
+
+            background: linear-gradient(145deg, rgba(30,40,90,0.95), rgba(40,60,120,0.95));
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7),
+                        0 0 70px rgba(255,255,255,0.05) inset;
+            backdrop-filter: blur(10px);
+
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            position: relative;
+        }
+
+        .page-border::before {
+            content: "🏦";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 140px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .header-line {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .header-line::before {
+            content: "📊";
+            margin-right: 10px;
+            color: #ffd700;
+        }
+
+        .blue-box {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            color: #ffffff;
+            padding: 12px 22px;
+            border-radius: 18px;
+            font-weight: 600;
+            font-size: 18px;
+            width: fit-content;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        }
+
+        .table-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .table-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .table-scroll::-webkit-scrollbar-thumb {
+            background: #ffffff55;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        thead tr {
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        tbody tr {
+            text-align: center;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            height: 52px;
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(37,99,235,0.2);
+        }
+
+        tbody td {
+            padding: 10px;
+        }
+
+        tbody a {
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        tbody a.edit {
+            color: #60a5fa;
+            margin-right: 12px;
+        }
+
+        tbody a.delete {
+            color: #f87171;
+        }
+
+        tbody a:hover {
+            opacity: 0.8;
+        }
+
+        .btn-capsule {
+            align-self: center;
+            padding: 14px 28px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+
+        .btn-capsule:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+        }
+
+        .page-border::after {
+            content: "© 2026 Velocity Bank. All rights reserved.";
+            text-align: center;
+            font-size: 14px;
+            color: #ffffffaa;
+            padding-top: 14px;
+            border-top: 1px dashed #ffffff55;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-border">
+
+    <div class="header-line">Admin Page</div>
+    <div class="blue-box">All Customer Accounts</div>
+
+    <div class="table-scroll">
+        <table>
+            <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Acc Number</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="acc : ${accounts}">
+                <td th:text="${acc.user.fullName}"></td>
+                <td th:text="${acc.accountNumber}"></td>
+                <td th:text="'Rs: ' + ${acc.balance}"></td>
+                <td>
+                    <a th:href="@{/admin/edit-account/{id}(id=${acc.id})}" class="edit">Edit</a>
+                    <a th:href="@{/admin/delete-account/{id}(id=${acc.id})}"
+                       class="delete"
+                       onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/admin/home" class="btn-capsule">Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

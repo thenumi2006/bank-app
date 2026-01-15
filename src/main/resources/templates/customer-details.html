@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Details</title>
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow-x: hidden;
+        }
+
+        .page-border {
+            width: 600px;
+            max-width: 95%;
+            padding: 40px 30px;
+            border-radius: 28px;
+            min-height: 70vh;
+            background: linear-gradient(145deg, rgba(30,40,90,0.95), rgba(40,60,120,0.95));
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 70px rgba(255,255,255,0.05) inset;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 20px;
+            position: relative;
+        }
+
+        .page-border::before {
+            content: "🏦";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 140px;
+            opacity: 0.05;
+        }
+
+
+        .header-line {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+        }
+        .header-line::before {
+            content: "🏛️";
+            margin-right: 12px;
+            color: #ffd700;
+        }
+
+        .blue-box {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #ffffff;
+            padding: 20px 25px;
+            border-radius: 22px;
+            text-align: center;
+            width: 100%;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        .blue-box::before {
+            content: "📄";
+            font-size: 36px;
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            opacity: 0.15;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            width: 100%;
+            font-size: 18px;
+            color: #ffffff;
+        }
+        .label {
+            font-weight: 600;
+            color: #a5b4fc;
+        }
+        .value {
+            color: #ffffff;
+        }
+        .balance-value {
+            color: #34d399;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        .btn-back {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            text-decoration: none;
+            color: #ffffff;
+            border: 2px solid #3b82f6;
+            padding: 12px 25px;
+            border-radius: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            background: #3b82f6;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        @media (max-width: 650px) {
+            .page-border {
+                width: 90%;
+                padding: 30px 20px;
+            }
+            .header-line {
+                font-size: 28px;
+            }
+            .blue-box {
+                font-size: 18px;
+                padding: 18px;
+            }
+            .detail-row {
+                font-size: 16px;
+                padding: 12px 10px;
+            }
+            .btn-back {
+                padding: 10px 20px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="page-border">
+    <div class="header-line">Customer Page</div>
+    <div class="blue-box">Account Details</div>
+
+    <div class="detail-row">
+        <span class="label">Full Name:</span>
+        <span class="value" th:text="${user.fullName}">Customer Name</span>
+    </div>
+    <div class="detail-row">
+        <span class="label">Username:</span>
+        <span class="value" th:text="${user.username}">Username</span>
+    </div>
+    <div class="detail-row">
+        <span class="label">Account Number:</span>
+        <span class="value" th:text="${account.accountNumber}">ACC-12345</span>
+    </div>
+    <div class="detail-row">
+        <span class="label">Account Type:</span>
+        <span class="value" th:text="${account.accountType}">SAVINGS</span>
+    </div>
+    <div class="detail-row">
+        <span class="label">Current Balance:</span>
+        <span class="balance-value" th:text="'RS:' + ${account.balance}">$0.00</span>
+    </div>
+
+    <a th:href="@{/customer/home}" class="btn-back">Back to Home</a>
+</div>
+</body>
+</html>

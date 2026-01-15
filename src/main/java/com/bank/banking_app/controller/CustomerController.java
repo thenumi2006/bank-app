@@ -1,11 +1,11 @@
 package com.bank.banking_app.controller;
 
 import com.bank.banking_app.entity.Account;
-import com.bank.banking_app.entity.Transaction;
 import com.bank.banking_app.entity.User;
+import com.bank.banking_app.entity.Transaction; // Make sure this is YOUR entity
 import com.bank.banking_app.repository.AccountRepository;
 import com.bank.banking_app.repository.TransactionRepository;
-import com.bank.banking_app.repository.UserRepository;
+import com.bank.banking_app.repository.UserRepository; // Added missing import
 import com.bank.banking_app.service.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +35,7 @@ public class CustomerController {
     public String showTransferPage() {
         return "customer-transfer";
     }
+
     @PostMapping("/transfer")
     public String processTransfer(@RequestParam String fromAcc,
                                   @RequestParam String toAcc,
@@ -69,5 +70,19 @@ public class CustomerController {
         }
 
         return "customer-history";
+    }
+    @GetMapping("/details")
+    public String viewCustomerDetails(Principal principal, Model model) {
+
+        User user = userRepo.findByUsername(principal.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Account account = accountRepo.findByUser(user).stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("No account found for this user"));
+
+        model.addAttribute("user", user);
+        model.addAttribute("account", account);
+
+        return "customer-details";
     }
 }
