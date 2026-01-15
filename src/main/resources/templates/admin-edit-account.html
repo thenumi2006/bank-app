@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>admin-edit-account</title>
+</head>
+<body>
+<style>
+
+    body {
+        font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000000; /* full black background */
+        overflow-x: hidden;
+    }
+
+    .page-border {
+            width: 520px;
+            max-width: 90%;
+            padding: 50px 40px;
+            border-radius: 28px;
+            min-height: 80vh;
+
+            background: linear-gradient(145deg, rgba(30,40,90,0.95), rgba(40,60,120,0.95));
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 70px rgba(255,255,255,0.05) inset;
+            backdrop-filter: blur(10px);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+
+
+            row-gap: 24px;
+        }
+
+    .page-border::before {
+        content: "🏦";
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 140px;
+        opacity: 0.05;
+        pointer-events: none;
+    }
+
+
+    .header-line {
+        font-size: 36px;
+        font-weight: 700;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .header-line::before {
+        content: "📝";
+        margin-right: 12px;
+        color: #ffd700;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 14px 16px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.15);
+        color: #ffffff;
+        font-size: 16px;
+        outline: none;
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.35);
+        transition: all 0.3s ease;
+        text-align: left;
+    }
+
+    .input-field::placeholder {
+        color: #ffffffaa;
+    }
+
+    .input-field:focus {
+        background: rgba(255,255,255,0.25);
+        box-shadow: 0 0 10px rgba(37,99,235,0.6) inset;
+    }
+
+
+    .input-field[readonly] {
+        background: rgba(255,255,255,0.2);
+        color: #cccccc;
+        cursor: not-allowed;
+    }
+
+    .btn-capsule {
+        width: 100%;
+        padding: 18px 0;
+        border: none;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #1e40af, #3b82f6);
+        color: #ffffff;
+        font-size: 17px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+
+    .btn-capsule:hover {
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.8);
+    }
+
+    .red-btn {
+        background: linear-gradient(135deg, #ef4444, #f87171);
+    }
+
+    .red-btn:hover {
+        background: linear-gradient(135deg, #f87171, #fca5a5);
+    }
+
+    .page-border::after {
+        content: "© 2026 Velocity Bank. All rights reserved.";
+        margin-top: auto;
+        padding-top: 24px;
+        text-align: center;
+        font-size: 14px;
+        color: #ffffffaa;
+        border-top: 1px dashed #ffffff55;
+    }
+
+    @media (max-width: 600px) {
+        .page-border {
+            width: 90%;
+            padding: 35px 25px;
+            min-height: 65vh;
+            row-gap: 20px;
+        }
+
+        .header-line {
+            font-size: 28px;
+        }
+
+        .input-field {
+            font-size: 14px;
+            padding: 12px 14px;
+        }
+
+        .btn-capsule {
+            padding: 16px 0;
+            font-size: 15px;
+        }
+    }
+
+</style>
+<div class="page-border">
+    <div class="header-line">edit account</div>
+
+    <form th:action="@{/admin/update-account}" th:object="${account}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <div style="text-align: center; margin-bottom: 5px;">Account Number (Read Only)</div>
+        <input type="text" th:field="*{accountNumber}" class="input-field" readonly style="background: #eee;">
+
+        <div style="text-align: center; margin-bottom: 5px;">Account Type</div>
+        <input type="text" th:field="*{accountType}" class="input-field red-text">
+
+        <div style="text-align: center; margin-bottom: 5px;">Current Balance</div>
+        <input type="number" th:field="*{balance}" class="input-field red-text">
+
+        <button type="submit" class="btn-capsule red-btn">update account</button>
+    </form>
+</div>
+</body>
+</html>
