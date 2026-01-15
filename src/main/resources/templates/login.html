@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow: hidden;
+        }
+        .page-border {
+            width: 520px;
+            max-width: 90%;
+            padding: 50px 40px;
+            border-radius: 28px;
+            min-height: 80vh;
+
+            background: linear-gradient(145deg, rgba(30,40,90,0.95), rgba(40,60,120,0.95));
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 70px rgba(255,255,255,0.05) inset;
+            backdrop-filter: blur(10px);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+
+
+            row-gap: 24px;
+        }
+
+        .page-border::before {
+            content: "🏦";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 140px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .header-line {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .header-line i {
+            margin-right: 12px;
+            color: #ffd700;
+        }
+
+        .sub-text {
+            font-size: 16px;
+            color: #ffffffaa;
+            margin-bottom: 32px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 15px;
+            color: #ffffffaa;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            color: #ffffffaa;
+            font-size: 18px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px 14px 38px;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.15);
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.35);
+            transition: all 0.3s ease;
+        }
+
+        .input-field::placeholder {
+            color: #ffffffaa;
+        }
+
+        .input-field:focus {
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 0 10px rgba(37,99,235,0.6) inset;
+        }
+
+        .btn-capsule {
+            width: 100%;
+            padding: 18px 0;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        .btn-capsule:hover {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.8);
+        }
+
+        .footer-text {
+            margin-top: 36px;
+            font-size: 14px;
+            color: #ffffffaa;
+            text-align: center;
+            border-top: 1px dashed #ffffff33;
+            padding-top: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .page-border {
+                width: 90%;
+                padding: 35px 25px;
+                min-height: 70vh;
+                row-gap: 20px;
+            }
+
+            .header-line {
+                font-size: 28px;
+            }
+
+            .sub-text {
+                font-size: 14px;
+                margin-bottom: 24px;
+            }
+
+            .btn-capsule {
+                padding: 16px 0;
+                font-size: 15px;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="page-border">
+    <div class="header-line">
+        <i class="fa-solid fa-building-columns"></i> Velocity Online Banking
+    </div>
+
+    <div class="sub-text">
+        Secure access to your account
+    </div>
+
+    <form th:action="@{/login}" method="post">
+
+        <div class="input-group">
+            <label>Username</label>
+            <div class="input-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="username" class="input-field" placeholder="Enter your username">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password" class="input-field" placeholder="Enter your password">
+            </div>
+        </div>
+
+        <button type="submit" class="btn-capsule">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+        </button>
+
+    </form>
+
+    <div class="footer-text">
+        © 2026 Velocity Bank. All rights reserved.
+    </div>
+
+</div>
+</body>
+</html>
