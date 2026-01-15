@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>admin-home</title>
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow: hidden;
+        }
+
+        .page-border {
+            width: 980px;
+            max-width: 95%;
+            padding: 50px 40px;
+            border-radius: 28px;
+            min-height: 80vh;
+
+            background: linear-gradient(145deg, rgba(30,40,90,0.95), rgba(40,60,120,0.95));
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 70px rgba(255,255,255,0.05) inset;
+            backdrop-filter: blur(10px);
+
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            row-gap: 24px;
+        }
+
+        .page-border::before {
+            content: "🏦";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 140px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .header-line {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .header-line::before {
+            content: "🏛️";
+            margin-right: 12px;
+            color: #ffd700; /* golden icon */
+        }
+
+
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+
+            background-color: rgba(0,0,0,0.6);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            transform: translateY(-2px);
+        }
+
+        .yellow-box {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            color: #ffffff;
+        }
+
+        /* Logout button matches nav items */
+        .nav-bar form button.nav-item {
+            background-color: rgba(0,0,0,0.6);
+            border: none;
+            cursor: pointer;
+        }
+        .nav-bar form button.nav-item:hover {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+        }
+
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        h3::after {
+            content: "";
+            display: block;
+            height: 3px;
+            width: 60px;
+            background: #ffffffaa;
+            margin: 10px 0 0 0;
+            border-radius: 2px;
+        }
+
+
+        .btn-capsule {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: #ffffff;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-capsule:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .btn-capsule span:first-child {
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+
+        .empty-state {
+            text-align: center;
+            color: #ffffffaa;
+            font-size: 15px;
+            margin: 40px 0;
+        }
+
+
+        .page-border::after {
+            content: "© 2026 Velocity Bank. All rights reserved.";
+            margin-top: auto;
+            padding-top: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: #ffffffaa;
+            border-top: 1px dashed #ffffff55;
+        }
+
+
+        @media (max-width: 1024px) {
+            .page-border {
+                width: 90%;
+                padding: 40px 30px;
+                row-gap: 20px;
+            }
+            h3 {
+                font-size: 18px;
+            }
+            .nav-item {
+                font-size: 14px;
+                padding: 10px 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="page-border">
+    <div class="header-line">Admin Portal</div>
+    <div class="nav-bar">
+        <a href="/admin/home" class="nav-item">home</a>
+        <a href="/admin/create-account" class="nav-item">create account</a>
+        <a href="/admin/all-accounts" class="nav-item">all customers</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="nav-item">
+                logout
+            </button>
+        </form>
+    </div>
+    <h3>Recent accounts</h3>
+    <div th:each="acc : ${recentAccounts}" class="btn-capsule" style="width: 90%; text-align: left;">
+        <span th:text="${acc.accountNumber}"></span> - <span th:text="${acc.user.fullName}"></span>
+    </div>
+</div>
+</body>
+</html>
