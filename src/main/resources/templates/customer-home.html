@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Home</title>
+
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow: hidden;
+        }
+
+        .page-border {
+            width: 980px;
+            max-width: 95%;
+            height: 85vh;
+            padding: 40px;
+            border-radius: 28px;
+
+            background: linear-gradient(145deg, rgba(30,40,90,0.95), rgba(40,60,120,0.95));
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7),
+                        0 0 70px rgba(255,255,255,0.05) inset;
+            backdrop-filter: blur(10px);
+
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            position: relative;
+        }
+
+        .page-border::before {
+            content: "🏦";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 140px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .header-line {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .header-line::before {
+            content: "👤";
+            margin-right: 10px;
+            color: #ffd700;
+        }
+
+        /* WELCOME CARD */
+        .welcome-box {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            color: #ffffff;
+            padding: 26px;
+            border-radius: 22px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .welcome-box span {
+            display: block;
+            margin-top: 6px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        /* ACTION BUTTONS */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .btn-capsule {
+            width: 100%;
+            padding: 18px 0;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+
+        .btn-capsule:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+        }
+
+        .btn-capsule.transfer::before { content: "💸"; }
+        .btn-capsule.history::before  { content: "📜"; }
+        .btn-capsule.details::before  { content: "🏦"; }
+
+        /* LOGOUT */
+        .logout {
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .logout button {
+            background: none;
+            border: none;
+            color: #ffffffaa;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: 0.3s;
+        }
+
+        .logout button:hover {
+            color: #60a5fa;
+        }
+
+        .page-border::after {
+            content: "© 2026 Velocity Bank. All rights reserved.";
+            text-align: center;
+            font-size: 14px;
+            color: #ffffffaa;
+            padding-top: 14px;
+            border-top: 1px dashed #ffffff55;
+        }
+
+        @media (max-width: 600px) {
+            .header-line { font-size: 28px; }
+            .welcome-box { font-size: 16px; }
+            .welcome-box span { font-size: 20px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-border">
+
+    <div class="header-line">Customer Dashboard</div>
+
+    <div class="welcome-box">
+        Welcome back,
+        <span th:text="${name}">Customer Name</span>
+    </div>
+
+    <div class="actions">
+        <a href="/customer/transfer" class="btn-capsule transfer">Transfer Funds</a>
+        <a href="/customer/history" class="btn-capsule history">Transaction History</a>
+        <a href="/customer/details" class="btn-capsule details">Account Details</a>
+    </div>
+
+    <div class="logout">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>
