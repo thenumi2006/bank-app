@@ -56,4 +56,33 @@ public class AdminController {
 
         return "redirect:/admin/home?success";
     }
+    @GetMapping("/all-accounts")
+    public String listAllAccounts(Model model) {
+        model.addAttribute("accounts", accountRepo.findAll());
+        return "admin-all-accounts";
+    }
+
+    @GetMapping("/delete-account/{id}")
+    public String deleteAccount(@PathVariable Long id) {
+        accountRepo.deleteById(id);
+        return "redirect:/admin/all-accounts?deleted";
+    }
+
+    @GetMapping("/edit-account/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Account account = accountRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+        model.addAttribute("account", account);
+        return "admin-edit-account";
+    }
+
+    @PostMapping("/update-account")
+    public String updateAccount(@ModelAttribute Account account) {
+        Account existing = accountRepo.findById(account.getId()).orElseThrow();
+        existing.setAccountType(account.getAccountType());
+        existing.setBalance(account.getBalance());
+
+        accountRepo.save(existing);
+        return "redirect:/admin/all-accounts?updated";
+    }
 }
