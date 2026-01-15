@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transaction History</title>
+    <style>
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow: hidden; /* prevent page shift */
+        }
+
+
+        .page-border {
+            width: 980px;
+            max-width: 95%;
+            padding: 40px 30px;
+            border-radius: 28px;
+            min-height: 70vh;
+            background: linear-gradient(145deg, rgba(30,40,90,0.95), rgba(40,60,120,0.95));
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 70px rgba(255,255,255,0.05) inset;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 20px;
+            position: relative;
+        }
+
+
+        .page-border::before {
+            content: "🏦";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 140px;
+            opacity: 0.05;
+        }
+
+
+        .header-line {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+        }
+        .header-line::before {
+            content: "🏛️";
+            margin-right: 12px;
+            color: #ffd700;
+        }
+
+
+        .blue-box {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #ffffff;
+            padding: 20px 25px;
+            border-radius: 22px;
+            text-align: center;
+            width: 100%;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        .blue-box::before {
+            content: "📄";
+            font-size: 36px;
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            opacity: 0.15;
+        }
+
+
+        .table-wrapper {
+            width: 100%;
+            max-height: 360px;
+            overflow-y: auto;
+        }
+
+
+        .table-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #ffffff55;
+            border-radius: 4px;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #ffffff;
+        }
+        th, td {
+            padding: 12px 8px;
+            text-align: center;
+        }
+        th {
+            background: rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            z-index: 1;
+        }
+        td {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .amt-out {
+            color: #f87171;
+            font-weight: 600;
+        }
+        .amt-in {
+            color: #34d399;
+            font-weight: 600;
+        }
+
+
+        .btn-back {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ffffff;
+            border: 2px solid #3b82f6;
+            padding: 10px 20px;
+            border-radius: 18px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+
+        .page-border::after {
+            content: "© 2026 Velocity Bank. All rights reserved.";
+            margin-top: auto;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #ffffffaa;
+            border-top: 1px dashed #ffffff55;
+        }
+
+
+        @media (max-width: 650px) {
+            .header-line {
+                font-size: 26px;
+            }
+            .blue-box {
+                font-size: 18px;
+            }
+            th, td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-border">
+    <div class="header-line">Customer Page</div>
+    <div class="blue-box">Transaction History</div>
+
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>To / From</th>
+                <th>Type</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tx : ${transactions}">
+                <td th:text="${#temporals.format(tx.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+
+                <td th:text="${tx.senderAccountNumber == myAccountNumber
+                    ? tx.receiverAccountNumber
+                    : tx.senderAccountNumber}">
+                </td>
+
+                <td th:text="${tx.transactionType}"></td>
+
+                <td th:class="${tx.senderAccountNumber == myAccountNumber ? 'amt-out' : 'amt-in'}"
+                    th:text="${tx.senderAccountNumber == myAccountNumber
+                        ? '-' + tx.amount
+                        : '+' + tx.amount}">
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(transactions)}">
+                <td colspan="4">No transactions found.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a th:href="@{/customer/home}" class="btn-back">Back to Home</a>
+</div>
+
+</body>
+</html>
